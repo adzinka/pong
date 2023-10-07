@@ -1,13 +1,14 @@
 package com.example.pingpong;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Bat {
 
     private Game game;
-    private Point2D position;
+    public Point2D position;
     private Point2D speed;
 
     private final double width = 15;
@@ -28,10 +29,13 @@ public class Bat {
         position = position.add(speed.multiply(timeDelta));
 
         if (position.getY() > game.getHeight() - height - 15 || position.getY() + height < 15 + height) {
-//            System.out.println(position.getY());
             speed = new Point2D(speed.getX(), -speed.getY());
         }
+    }
 
+    public Rectangle2D getBoundingBox() {
+        return new Rectangle2D(position.getX(), position.getY(),
+                15, 80);
     }
 }
 

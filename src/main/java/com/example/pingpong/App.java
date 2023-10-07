@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
 /**
- *  Class <b>App</b> - extends class Application and it is an entry point of the program
+ *  Class <b>App</b> - extends class Application, and it is an entry point of the program
  * @author     Java I
  */
 public class App extends Application {

@@ -15,10 +15,14 @@ public class Game {
     private Bat leftBat;
     private Bat rightBat;
 
+    private boolean isHitLeft;
+
+    private boolean isHitRight;
+
     public Game(double width, double height) {
         this.width = width;
         this.height = height;
-        this.ball = new Ball(this, new Point2D(80, 90), new Point2D(100, 100), 15);
+        this.ball = new Ball(this, new Point2D(80, 90), new Point2D(120, 90), 15);
         this.leftBat = new Bat(this, new Point2D(30, 60), new Point2D(0, 50));
         this.rightBat = new Bat(this, new Point2D(width - 30 - 15, 150), new Point2D(0, -50));
     }
@@ -40,6 +44,13 @@ public class Game {
         this.ball.simulate(timeDelta);
         this.leftBat.simulate(timeDelta);
         this.rightBat.simulate(timeDelta);
+
+        isHitLeft = ball.getBoundingBox().intersects(leftBat.getBoundingBox());
+        isHitRight = ball.getBoundingBox().intersects(rightBat.getBoundingBox());
+
+        if (isHitLeft || isHitRight) {
+            ball.hit();
+        }
     }
 
     public double getHeight() {

@@ -1,6 +1,7 @@
 package com.example.pingpong;
 
 import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -34,17 +35,29 @@ public class Ball {
 
     public void simulate(double timeDelta) {
         position = position.add(speed.multiply(timeDelta));
-        //position = new Point2D(position.getX() % game.getWidth(),
-        //                        position.getY() % game.getHeight());
+        // (game.getHeight() - position.getY()) - why?
+        if ((game.getHeight() - position.getY()) > game.getHeight() - 30 || (game.getHeight() - position.getY()) < 15) {
 
-        if (position.getY() > game.getHeight() - 15 || position.getY() < 25) {
-            System.out.println(position.getY());
             speed = new Point2D(speed.getX(), -speed.getY());
+            System.out.println("Y coordinate " + (game.getHeight() - position.getY()));
         }
 
         if (position.getX() > game.getWidth() - size || position.getX() < 0) {
-            System.out.println(position.getX());
+            if (position.getX() < 0) {
+                position = new Point2D(0, position.getY());
+            }
             speed = new Point2D(-speed.getX(), speed.getY());
+            System.out.println("X coordinate " + position.getX());
         }
+
+    }
+
+    public Rectangle2D getBoundingBox() {
+        return new Rectangle2D(position.getX(), game.getHeight() - position.getY(),
+                15, 15);
+    }
+
+    public void hit() {
+        speed = new Point2D(-speed.getX(), -speed.getY());
     }
 }
